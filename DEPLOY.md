@@ -1,6 +1,22 @@
 # 🌐 CyberArena — Доменге және Серверге Шығару Нұсқаулығы
 
-Бұл нұсқаулық **CyberArena** веб-порталын нақты доменге (мысалы, `arena.yourdomain.kz`) **Cloudflare + Cloudflare Tunnel** арқылы 100% қауіпсіз шығару жолын көрсетеді.
+## А-нұсқасы: Тегін Лэндинг бетін шығару (Cloudflare Pages, 0 ₸, картасыз)
+
+Егер әзірге `landing/` папкасындағы ресми сайтты онлайн доменге шығарып, адамдар GitHub-тан жүктеп алып өз ноутында `./arena.sh auto` арқылы іске қоссын десеңіз:
+
+1. [Cloudflare Dashboard](https://dash.cloudflare.com) → **Workers & Pages** → **Create** → **Pages** → **Connect to Git** таңдаңыз.
+2. GitHub-тағы `BekbolatBolebay/CyberArena` репозиторийін таңдаңыз (репо **Public** болуы тиіс, Open Source MIT!).
+3. Баптаулары:
+   * **Build command:** *(бос қалдырыңыз)*
+   * **Build output directory:** `landing`
+4. **Save and Deploy** басыңыз — 30 секундта тегін HTTPS сайт дайын болады!
+5. **Custom domains** бөлімінен өз `.kz` доменіңізді (мысалы, `arena.yourdomain.kz`) бір батырмамен байлай аласыз.
+
+---
+
+## Б-нұсқасы: Толық Порталды VPS серверге шығару
+
+Бұл нұсқаулық **CyberArena** веб-порталын нақты доменге **Cloudflare + Cloudflare Tunnel** арқылы 100% қауіпсіз шығару жолын көрсетеді.
 
 > [!IMPORTANT]
 > **Неліктен `docker-compose.prod.yml` қолданамыз?**

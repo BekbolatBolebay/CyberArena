@@ -1,3 +1,6 @@
+# Generated adaptive compose file
+docker-compose.adaptive.yml
+
 # Local databases and runtime data
 portal/data/
 *.db

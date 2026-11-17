@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CyberArena — Адаптивті Кибер-Полигон | Open Source (MIT)</title>
+  <meta
+    name="description"
+    content="CyberArena — ноутбуктің қуатына автоматты бейімделетін ашық кодты (MIT) киберқауіпсіздік полигоны. Who Am I стиліндегі 6 миссия, оқшауланған Docker зертханалары."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="CyberArena — Адаптивті Кибер-Полигон" />
+  <meta
+    property="og:description"
+    content="Құрылғыңызда қызусыз және 100% оқшауланған ортада киберқауіпсіздікті үйреніңіз. Open Source, MIT."
+  />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="badge">MIT OPEN SOURCE</span>
+      <span class="brand-name">CYBER<span class="accent">ARENA</span></span>
+    </div>
+    <nav class="nav">
+      <a href="#adaptive" data-i18n="nav.adaptive">Адаптация</a>
+      <a href="#missions" data-i18n="nav.missions">Миссиялар</a>
+      <a href="#install" data-i18n="nav.install">Орнату</a>
+      <a href="https://github.com/BekbolatBolebay/CyberArena" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+    <div class="lang-switch" role="group" aria-label="Тіл таңдау">
+      <button type="button" data-lang="kk" class="active">KZ</button>
+      <button type="button" data-lang="ru">RU</button>
+      <button type="button" data-lang="en">EN</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="kicker" data-i18n="hero.kicker">KEIN SYSTEM IST SICHER // ЖЕКЕ КИБЕР-ПОЛИГОН</div>
+      <h1 data-i18n="hero.title">Ноутбугіңе қарай икемделетін кибер-арена.</h1>
+      <p class="lead" data-i18n="hero.lead">
+        CyberArena — студенттер мен мамандарға арналған ашық кодты зертхана. Жүйе компьютеріңіздің
+        CPU, RAM және дискісін өзі тексеріп, қыздырмайтын оңтайлы режимді (LIGHT / BALANCED / FULL) автоматты таңдайды.
+      </p>
+
+      <div class="install-box">
+        <span class="prompt">$</span>
+        <code id="install-cmd">git clone https://github.com/BekbolatBolebay/CyberArena.git && cd CyberArena && ./arena.sh auto</code>
+        <button id="btn-copy" type="button" class="btn btn-primary btn-sm" data-i18n="hero.copy">Көшіру</button>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#adaptive" class="btn btn-primary" data-i18n="hero.calc">Қуат калькуляторы</a>
+        <a href="https://github.com/BekbolatBolebay/CyberArena" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="hero.github">GitHub кодын көру</a>
+      </div>
+    </section>
+
+    <section id="adaptive" class="section">
+      <div class="section-head">
+        <h2 data-i18n="ad.title">⚡ Ноуттың қуатына автоматты адаптация</h2>
+        <p data-i18n="ad.sub">Слайдты жылжытып, компьютеріңізде қай режим іске қосылатынын тексеріңіз:</p>
+      </div>
+
+      <div class="adaptive-grid">
+        <div class="card calc-card">
+          <div class="slider-group">
+            <label for="ram-slider">
+              <span data-i18n="ad.ram">Жедел жады (RAM):</span>
+              <strong id="ram-val">8 GB</strong>
+            </label>
+            <input id="ram-slider" type="range" min="2" max="32" step="2" value="8" />
+          </div>
+
+          <div class="slider-group">
+            <label for="cpu-slider">
+              <span data-i18n="ad.cpu">Процессор ядролары (CPU):</span>
+              <strong id="cpu-val">4 Cores</strong>
+            </label>
+            <input id="cpu-slider" type="range" min="2" max="16" step="2" value="4" />
+          </div>
+
+          <div class="toggle-group">
+            <label class="checkbox-label">
+              <input id="docker-check" type="checkbox" checked />
+              <span data-i18n="ad.docker">Docker / Podman орнатылған</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="card result-card">
+          <div class="res-badge" id="res-profile">BALANCED</div>
+          <h3 id="res-title">Орташа режим (~768 MB RAM)</h3>
+          <p id="res-desc" class="muted"></p>
+          <div class="res-targets">
+            <span class="res-label" data-i18n="ad.targets">Іске қосылатын жүйелер:</span>
+            <ul id="res-list"></ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tiers-row">
+        <div class="card tier-card">
+          <span class="tier-tag light">LIGHT</span>
+          <h4>≤ 4 GB RAM немесе Docker-сіз</h4>
+          <p class="muted">Тек таза Python-да Portal + IP Camera (~60 MB RAM). Ескі ноутбуктерде де қызбайды.</p>
+        </div>
+        <div class="card tier-card">
+          <span class="tier-tag balanced">BALANCED</span>
+          <h4>5–11 GB RAM + Docker</h4>
+          <p class="muted">Portal + IP Camera + OWASP Juice Shop (қатаң CPU/RAM лимитімен).</p>
+        </div>
+        <div class="card tier-card">
+          <span class="tier-tag full">FULL</span>
+          <h4>12+ GB RAM, 6+ CPU + Docker</h4>
+          <p class="muted">Толық полигон: Portal + Juice Shop + DVWA + IP Camera.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="missions" class="section">
+      <div class="section-head">
+        <h2 data-i18n="mis.title">🎭 «Who Am I» стиліндегі 6 миссия</h2>
+        <p data-i18n="mis.sub">Әр операцияда шабуыл механизмін зерттеп, соңында Blue Team қорғанысын меңгересіз.</p>
+      </div>
+      <div class="missions-grid">
+        <div class="card m-card">
+          <span class="m-code">OP-01 · RECON</span>
+          <h3>MRX-тің ізі</h3>
+          <p class="muted"><code>/robots.txt</code> пен жасырын каталогтарды тексеру арқылы бастапқы барлау.</p>
+        </div>
+        <div class="card m-card">
+          <span class="m-code">OP-02 · SNIFFING</span>
+          <h3>Ашық Wi-Fi торы</h3>
+          <p class="muted">Шифрланбаған HTTP трафик пен Base64 токенін талдау.</p>
+        </div>
+        <div class="card m-card">
+          <span class="m-code">OP-03 · SQLI</span>
+          <h3>Темір есікті алдау</h3>
+          <p class="muted">Оқшауланған in-memory симуляторда SQL инъекциясын және Prepared Statement-ті үйрену.</p>
+        </div>
+        <div class="card m-card">
+          <span class="m-code">OP-04 · FORMJACKING</span>
+          <h3>Кіреберістегі тыңшы</h3>
+          <p class="muted">Формадан дерек ұрлайтын JS скриптті табу және CSP қорғанысы.</p>
+        </div>
+        <div class="card m-card">
+          <span class="m-code">OP-05 · IOT</span>
+          <h3>Көлеңкелі камера</h3>
+          <p class="muted">IP-камерадағы зауыттық құпия сөздер қаупін тексеру.</p>
+        </div>
+        <div class="card m-card">
+          <span class="m-code">OP-06 · BLUE TEAM</span>
+          <h3>Анти-DDoS Қалқан</h3>
+          <p class="muted">Nginx access-логтарынан ботнет подсетін анықтап, WAF ережесімен жабу.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="install" class="section">
+      <div class="card cta-card">
+        <h2 data-i18n="ins.title">30 секундта іске қосыңыз</h2>
+        <p class="muted" data-i18n="ins.sub">
+          Толық ашық код (MIT лицензиясы). Жүйе порттарды тек <code>127.0.0.1</code>-де ашады — сыртқы желіге қауіпсіз.
+        </p>
+        <pre class="cli-block">git clone https://github.com/BekbolatBolebay/CyberArena.git
+cd CyberArena
+./arena.sh profile   # Өз ноутыңыздың қуатын тексеру
+./arena.sh auto      # Бейімделген режимді іске қосу</pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>CyberArena · Open Source (MIT) · 100% Білім беру және қорғаныс мақсатында</span>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
