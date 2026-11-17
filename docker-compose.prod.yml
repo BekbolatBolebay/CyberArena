@@ -1,0 +1,49 @@
+# Production (Доменге шығару) режимі:
+# Қолдануы: docker-compose -f docker-compose.prod.yml up -d --build
+#
+# Бұл режимде тек қауіпсіз Portal (sandboxed миссиялар) Nginx арқылы 127.0.0.1:8088-ге
+# шығарылады (Cloudflare Tunnel үшін). DVWA / Juice Shop сыртқы интернетке ашылмайды!
+
+services:
+  portal:
+    build:
+      context: ./portal
+      dockerfile: Dockerfile
+    container_name: arena_portal_prod
+    restart: unless-stopped
+    environment:
+      - ARENA_HOST=0.0.0.0
+      - ARENA_PORT=8000
+      - ARENA_DB_PATH=/app/data/arena.db
+      - ARENA_TRUST_PROXY=1
+    volumes:
+      - arena_prod_data:/app/data
+    networks:
+      - portal_internal
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+  nginx:
+    image: docker.io/library/nginx:alpine
+    container_name: arena_nginx_proxy
+    restart: unless-stopped
+    depends_on:
+      - portal
+    ports:
+      - "127.0.0.1:8088:80"
+    volumes:
+      - ./deploy/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - portal_internal
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  portal_internal:
+    driver: bridge
+    internal: true
+
+volumes:
+  arena_prod_data:

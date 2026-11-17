@@ -1,0 +1,77 @@
+services:
+  # 0. CyberArena Web Portal ("Who Am I / CLAY" Edition)
+  portal:
+    build:
+      context: ./portal
+      dockerfile: Dockerfile
+    container_name: arena_portal
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - arena_portal_data:/app/data
+    networks:
+      - cyber_net
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+
+  # 1. Нағыз заманауи интернет-дүкен (OWASP Juice Shop)
+  juice-shop:
+    image: docker.io/bkimminich/juice-shop:latest
+    container_name: arena_juice_shop
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+    networks:
+      - cyber_net
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+
+  # 2. Damn Vulnerable Web Application (DVWA)
+  dvwa:
+    image: docker.io/vulnerables/web-dvwa:latest
+    container_name: arena_dvwa
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:80"
+    networks:
+      - cyber_net
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+
+  # 3. IP Surveillance Camera Emulator (Оқшауланған контейнер)
+  ip-camera:
+    build:
+      context: ./targets/ip_camera
+      dockerfile: Dockerfile
+    container_name: arena_ip_camera
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8081:8081"
+    networks:
+      - cyber_net
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 128M
+
+networks:
+  cyber_net:
+    driver: bridge
+
+volumes:
+  arena_portal_data:

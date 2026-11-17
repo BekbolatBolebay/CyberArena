@@ -1,0 +1,22 @@
+# Local databases and runtime data
+portal/data/
+*.db
+*.sqlite
+*.sqlite3
+
+# Packet captures & logs (never commit local captures)
+pcaps/*.pcap
+logs/*.log
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Environment & Tunnel secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.cloudflared/
