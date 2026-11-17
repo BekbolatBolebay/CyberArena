@@ -8,24 +8,28 @@
     name="description"
     content="CyberArena — ноутбуктің қуатына автоматты бейімделетін ашық кодты (MIT) киберқауіпсіздік полигоны. Who Am I стиліндегі 6 миссия, оқшауланған Docker зертханалары."
   />
+  <meta name="theme-color" content="#07090d" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="CyberArena — Адаптивті Кибер-Полигон" />
   <meta
     property="og:description"
     content="Құрылғыңызда қызусыз және 100% оқшауланған ортада киберқауіпсіздікті үйреніңіз. Open Source, MIT."
   />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
   <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <div class="scanline" aria-hidden="true"></div>
 
   <header class="topbar">
     <div class="brand">
-      <span class="badge">MIT OPEN SOURCE</span>
+      <span class="badge" data-i18n="badge.oss">MIT OPEN SOURCE</span>
       <span class="brand-name">CYBER<span class="accent">ARENA</span></span>
     </div>
     <nav class="nav">
       <a href="#adaptive" data-i18n="nav.adaptive">Адаптация</a>
+      <a href="#demo" data-i18n="nav.demo">Терминал</a>
       <a href="#missions" data-i18n="nav.missions">Миссиялар</a>
       <a href="#install" data-i18n="nav.install">Орнату</a>
       <a href="https://github.com/BekbolatBolebay/CyberArena" target="_blank" rel="noopener">GitHub</a>
@@ -46,6 +50,12 @@
         CPU, RAM және дискісін өзі тексеріп, қыздырмайтын оңтайлы режимді (LIGHT / BALANCED / FULL) автоматты таңдайды.
       </p>
 
+      <div class="gh-status-bar">
+        <span class="gh-pill" id="gh-repo-status">GitHub: BekbolatBolebay/CyberArena</span>
+        <span class="gh-pill" id="gh-stars" data-i18n="gh.starsDefault">★ Open Source (MIT)</span>
+        <span class="gh-pill" id="gh-updated" data-i18n="gh.updatedDefault">v2.0 · Adaptive</span>
+      </div>
+
       <div class="install-box">
         <span class="prompt">$</span>
         <code id="install-cmd">git clone https://github.com/BekbolatBolebay/CyberArena.git && cd CyberArena && ./arena.sh auto</code>
@@ -53,7 +63,8 @@
       </div>
 
       <div class="hero-actions">
-        <a href="#adaptive" class="btn btn-primary" data-i18n="hero.calc">Қуат калькуляторы</a>
+        <a href="https://github.com/BekbolatBolebay/CyberArena/archive/refs/heads/main.zip" class="btn btn-primary" data-i18n="hero.zip" download>ZIP жүктеу</a>
+        <a href="#adaptive" class="btn btn-ghost" data-i18n="hero.calc">Қуат калькуляторы</a>
         <a href="https://github.com/BekbolatBolebay/CyberArena" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="hero.github">GitHub кодын көру</a>
       </div>
     </section>
@@ -92,7 +103,7 @@
 
         <div class="card result-card">
           <div class="res-badge" id="res-profile">BALANCED</div>
-          <h3 id="res-title">Орташа режим (~768 MB RAM)</h3>
+          <h3 id="res-title">BALANCED (~768 MB RAM)</h3>
           <p id="res-desc" class="muted"></p>
           <div class="res-targets">
             <span class="res-label" data-i18n="ad.targets">Іске қосылатын жүйелер:</span>
@@ -104,19 +115,38 @@
       <div class="tiers-row">
         <div class="card tier-card">
           <span class="tier-tag light">LIGHT</span>
-          <h4>≤ 4 GB RAM немесе Docker-сіз</h4>
-          <p class="muted">Тек таза Python-да Portal + IP Camera (~60 MB RAM). Ескі ноутбуктерде де қызбайды.</p>
+          <h4 data-i18n="tier.lightTitle">≤ 4 GB RAM немесе Docker-сіз</h4>
+          <p class="muted" data-i18n="tier.lightDesc">Тек таза Python-да Portal + IP Camera (~60 MB RAM). Ескі ноутбуктерде де қызбайды.</p>
         </div>
         <div class="card tier-card">
           <span class="tier-tag balanced">BALANCED</span>
-          <h4>5–11 GB RAM + Docker</h4>
-          <p class="muted">Portal + IP Camera + OWASP Juice Shop (қатаң CPU/RAM лимитімен).</p>
+          <h4 data-i18n="tier.balancedTitle">5–11 GB RAM + Docker</h4>
+          <p class="muted" data-i18n="tier.balancedDesc">Portal + IP Camera + OWASP Juice Shop (қатаң CPU/RAM лимитімен).</p>
         </div>
         <div class="card tier-card">
           <span class="tier-tag full">FULL</span>
-          <h4>12+ GB RAM, 6+ CPU + Docker</h4>
-          <p class="muted">Толық полигон: Portal + Juice Shop + DVWA + IP Camera.</p>
+          <h4 data-i18n="tier.fullTitle">12+ GB RAM, 6+ CPU + Docker</h4>
+          <p class="muted" data-i18n="tier.fullDesc">Толық полигон: Portal + Juice Shop + DVWA + IP Camera.</p>
         </div>
+      </div>
+    </section>
+
+    <section id="demo" class="section">
+      <div class="section-head">
+        <h2 data-i18n="demo.title">&gt;_ CLAY Терминал Демосы</h2>
+        <p data-i18n="demo.sub">Төмендегі интерактивті терминалда help, profile, missions командаларын жазып көріңіз:</p>
+      </div>
+      <div class="card terminal-card">
+        <div class="term-head">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <span>clay@cyberarena:~# preview_shell</span>
+        </div>
+        <div id="demo-out" class="demo-out" aria-live="polite"></div>
+        <form id="demo-form" class="demo-form" autocomplete="off">
+          <span class="prompt">root@clay:~#</span>
+          <input id="demo-input" type="text" placeholder="help, profile, missions, clear" spellcheck="false" />
+          <button class="btn btn-primary btn-sm" type="submit" data-i18n="demo.run">Орындау</button>
+        </form>
       </div>
     </section>
 
@@ -128,33 +158,33 @@
       <div class="missions-grid">
         <div class="card m-card">
           <span class="m-code">OP-01 · RECON</span>
-          <h3>MRX-тің ізі</h3>
-          <p class="muted"><code>/robots.txt</code> пен жасырын каталогтарды тексеру арқылы бастапқы барлау.</p>
+          <h3 data-i18n="m1.title">Жасырын із</h3>
+          <p class="muted" data-i18n="m1.desc">/robots.txt пен жасырын каталогтарды тексеру арқылы бастапқы барлау.</p>
         </div>
         <div class="card m-card">
           <span class="m-code">OP-02 · SNIFFING</span>
-          <h3>Ашық Wi-Fi торы</h3>
-          <p class="muted">Шифрланбаған HTTP трафик пен Base64 токенін талдау.</p>
+          <h3 data-i18n="m2.title">Ашық Wi-Fi торы</h3>
+          <p class="muted" data-i18n="m2.desc">Шифрланбаған HTTP трафик пен Base64 токенін талдау.</p>
         </div>
         <div class="card m-card">
           <span class="m-code">OP-03 · SQLI</span>
-          <h3>Темір есікті алдау</h3>
-          <p class="muted">Оқшауланған in-memory симуляторда SQL инъекциясын және Prepared Statement-ті үйрену.</p>
+          <h3 data-i18n="m3.title">Темір есікті алдау</h3>
+          <p class="muted" data-i18n="m3.desc">Оқшауланған in-memory симуляторда SQL инъекциясын және Prepared Statement-ті үйрену.</p>
         </div>
         <div class="card m-card">
           <span class="m-code">OP-04 · FORMJACKING</span>
-          <h3>Кіреберістегі тыңшы</h3>
-          <p class="muted">Формадан дерек ұрлайтын JS скриптті табу және CSP қорғанысы.</p>
+          <h3 data-i18n="m4.title">Кіреберістегі тыңшы</h3>
+          <p class="muted" data-i18n="m4.desc">Формадан дерек ұрлайтын JS скриптті табу және CSP қорғанысы.</p>
         </div>
         <div class="card m-card">
           <span class="m-code">OP-05 · IOT</span>
-          <h3>Көлеңкелі камера</h3>
-          <p class="muted">IP-камерадағы зауыттық құпия сөздер қаупін тексеру.</p>
+          <h3 data-i18n="m5.title">Көлеңкелі камера</h3>
+          <p class="muted" data-i18n="m5.desc">IP-камерадағы зауыттық құпия сөздер қаупін тексеру.</p>
         </div>
         <div class="card m-card">
           <span class="m-code">OP-06 · BLUE TEAM</span>
-          <h3>Анти-DDoS Қалқан</h3>
-          <p class="muted">Nginx access-логтарынан ботнет подсетін анықтап, WAF ережесімен жабу.</p>
+          <h3 data-i18n="m6.title">Анти-DDoS Қалқан</h3>
+          <p class="muted" data-i18n="m6.desc">Nginx access-логтарынан ботнет подсетін анықтап, WAF ережесімен жабу.</p>
         </div>
       </div>
     </section>
@@ -163,18 +193,15 @@
       <div class="card cta-card">
         <h2 data-i18n="ins.title">30 секундта іске қосыңыз</h2>
         <p class="muted" data-i18n="ins.sub">
-          Толық ашық код (MIT лицензиясы). Жүйе порттарды тек <code>127.0.0.1</code>-де ашады — сыртқы желіге қауіпсіз.
+          Толық ашық код (MIT лицензиясы). Жүйе порттарды тек 127.0.0.1-де ашады — сыртқы желіге қауіпсіз.
         </p>
-        <pre class="cli-block">git clone https://github.com/BekbolatBolebay/CyberArena.git
-cd CyberArena
-./arena.sh profile   # Өз ноутыңыздың қуатын тексеру
-./arena.sh auto      # Бейімделген режимді іске қосу</pre>
+        <pre id="cli-block" class="cli-block"></pre>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <span>CyberArena · Open Source (MIT) · 100% Білім беру және қорғаныс мақсатында</span>
+    <span data-i18n="footer.text">CyberArena · Open Source (MIT) · 100% Білім беру және қорғаныс мақсатында</span>
   </footer>
 
   <script src="./app.js"></script>

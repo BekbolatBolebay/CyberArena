@@ -380,7 +380,7 @@ class ArenaRequestHandler(BaseHTTPRequestHandler):
         if path == "/robots.txt":
             self._send_text(
                 200,
-                "User-agent: *\nDisallow: /clay-audit-vault\n# MRX says: Kein System ist sicher.\n",
+                "User-agent: *\nDisallow: /clay-audit-vault\n# CLAY Audit: Kein System ist sicher.\n",
             )
             return
 
